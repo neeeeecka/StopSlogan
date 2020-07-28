@@ -104,3 +104,11 @@ function checkNodeRecursively(startNode) {
     checkNodeRecursively(node);
   });
 }
+// chrome.runtime.sendMessage(bannedSlogans, function (response) {
+//     console.log(response.farewell);
+// });
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.action == "getBannedSlogans") {
+    sendResponse(bannedSlogans);
+  }
+});
