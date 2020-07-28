@@ -19,6 +19,7 @@
     .page {
       transition: all 0.25s ease;
       width: 100%;
+      flex-shrink: 0;
     }
     .h {
       color: whitesmoke;
@@ -78,8 +79,12 @@
       </div>
       <div id="page2" class="page">
         <button id="s_page1" class="pageBtn">&lt; Go back</button>
-        <span class="h">Add your own banned words: </span>
-        <div id="bannedSlogansList"></div>
+        <span class="h">Add your own banned slogans: </span>
+        <span>
+          <input type="text" placeholder="Type..." />
+          <button id="add">+</button>
+        </span>
+        <div id="userBannedSlogansList"></div>
       </div>
     </div>
   </body>
