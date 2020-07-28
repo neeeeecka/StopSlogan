@@ -11,13 +11,13 @@
       margin: 0;
     }
     .container {
-      transition: all 0.25s ease;
       width: 400px;
       overflow: hidden;
       display: flex;
       padding: 5px 0;
     }
     .page {
+      transition: all 0.25s ease;
       width: 100%;
     }
     .h {
@@ -51,7 +51,7 @@
       text-align: center;
       margin-right: 10px;
     }
-    #s_page2 {
+    .pageBtn {
       display: block;
       width: 100%;
       text-align: left;
@@ -62,7 +62,7 @@
       outline: none;
       border: none;
     }
-    #s_page2:hover {
+    .pageBtn:hover {
       background: rgb(97, 97, 97);
       color: rgb(248, 248, 248);
     }
@@ -70,12 +70,14 @@
   <body>
     <div class="container" id="container">
       <div id="page1" class="page">
-        <button id="s_page2">> Go to word banning settings</button>
+        <button id="s_page2" class="pageBtn">
+          &gt; Go to word banning settings
+        </button>
         <span class="h">Banned slogans found on this webpage: </span>
         <div id="bannedSlogansList"></div>
       </div>
       <div id="page2" class="page">
-        <button id="s_page1">< Go back</button>
+        <button id="s_page1" class="pageBtn">&lt; Go back</button>
         <span class="h">Add your own banned words: </span>
         <div id="bannedSlogansList"></div>
       </div>

@@ -4,15 +4,16 @@
 // });
 
 const bannedSlogansList = document.getElementById("bannedSlogansList");
+const page1 = document.getElementById("page1");
 const page2btn = document.getElementById("s_page2");
 const page1btn = document.getElementById("s_page1");
 const container = document.getElementById("container");
 
 page2btn.onclick = () => {
-  container.style.marginLeft = "-400px";
+  page1.style.marginLeft = "-400px";
 };
 page1btn.onclick = () => {
-  container.style.marginLeft = "0px";
+  page1.style.marginLeft = "0px";
 };
 
 function span(text) {
