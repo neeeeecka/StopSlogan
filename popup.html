@@ -7,23 +7,78 @@
     body {
       background: rgb(24, 24, 24);
       font-size: 1em;
+      padding: 0;
+      margin: 0;
     }
     .container {
-      width: 200px;
+      transition: all 0.25s ease;
+      width: 400px;
+      overflow: hidden;
+      display: flex;
+      padding: 5px 0;
+    }
+    .page {
+      width: 100%;
     }
     .h {
       color: whitesmoke;
       font-size: 0.8em;
+      margin-bottom: 10px;
+      display: inline-block;
+      padding: 0 15px;
+    }
+    #bannedSlogansList {
+      overflow: auto;
+      max-height: 200px;
     }
     #bannedSlogansList > span {
+      display: flex;
+      width: 100%;
+      overflow: hidden;
+      color: whitesmoke;
+      padding: 5px 0;
+      cursor: pointer;
+    }
+    #bannedSlogansList > span > span {
+      display: inline-block;
+    }
+    #bannedSlogansList > span:nth-child(2n) {
+      background: rgb(34, 34, 34);
+    }
+    #bannedSlogansList > span > span:first-child {
+      flex-shrink: 0;
+      width: 50px;
+      text-align: center;
+      margin-right: 10px;
+    }
+    #s_page2 {
       display: block;
+      width: 100%;
+      text-align: left;
+      padding: 10px 15px;
+      cursor: pointer;
+      background: rgb(65, 65, 65);
+      color: rgb(197, 197, 197);
+      outline: none;
+      border: none;
+    }
+    #s_page2:hover {
+      background: rgb(97, 97, 97);
+      color: rgb(248, 248, 248);
     }
   </style>
   <body>
-    <div class="container">
-      <span class="h">Currently banned slogans: </span>
-
-      <div id="bannedSlogansList"></div>
+    <div class="container" id="container">
+      <div id="page1" class="page">
+        <button id="s_page2">> Go to word banning settings</button>
+        <span class="h">Banned slogans found on this webpage: </span>
+        <div id="bannedSlogansList"></div>
+      </div>
+      <div id="page2" class="page">
+        <button id="s_page1">< Go back</button>
+        <span class="h">Add your own banned words: </span>
+        <div id="bannedSlogansList"></div>
+      </div>
     </div>
   </body>
   <script src="background.js"></script>

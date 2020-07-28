@@ -4,6 +4,16 @@
 // });
 
 const bannedSlogansList = document.getElementById("bannedSlogansList");
+const page2btn = document.getElementById("s_page2");
+const page1btn = document.getElementById("s_page1");
+const container = document.getElementById("container");
+
+page2btn.onclick = () => {
+  container.style.marginLeft = "-400px";
+};
+page1btn.onclick = () => {
+  container.style.marginLeft = "0px";
+};
 
 function span(text) {
   return "<span>" + text + "</span>";
@@ -14,14 +24,16 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
   chrome.tabs.sendMessage(tabs[0].id, { action: "getBannedSlogans" }, function(
     response
   ) {
-    const resultContent = "";
+    let resultContent = "";
 
     if (response.length == 0) {
       resultContent = span("Hooray, no banned words!");
     } else {
-      response.forEach(slogan => {
-        resultContent += span(slogan);
+      response.forEach((slogan, i) => {
+        resultContent += span(span(i) + span(slogan));
       });
     }
+
+    bannedSlogansList.innerHTML = resultContent;
   });
 });
