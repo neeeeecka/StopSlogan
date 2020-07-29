@@ -71,13 +71,15 @@ function checkNode(startNode) {
   } else {
     if (startNode.nodeType == Node.ELEMENT_NODE) {
       if (startNode.tagName == "INPUT" || startNode.tagName == "TEXTAREA") {
-        if (deepCheck(startNode.value)) {
-          startNode.value = bannedWord;
+        const res = deepCheck(startNode.value);
+        if (res) {
+          startNode.value = res;
         }
       } else {
         if (startNode.childNodes.length == 0) {
-          if (deepCheck(startNode.innerText)) {
-            startNode.innerText = bannedWord;
+          const res = deepCheck(startNode.value);
+          if (res) {
+            startNode.innerText = res;
           }
         }
       }
@@ -92,12 +94,13 @@ function deepCheck(text) {
   text = text.toLowerCase();
 
   if (slogans[text]) {
-    return true;
+    return bannedWord;
   }
   for (var i = 0; i < slogansKeys.length; i++) {
     const key = slogansKeys[i];
     if (text.includes(key)) {
-      return true;
+      let edited = text.replace(key, bannedWord);
+      return edited;
     }
   }
   return false;
