@@ -18,7 +18,6 @@ const url =
 function chromeStorage(sKey) {
   return new Promise(function(resolve, reject) {
     chrome.storage.sync.get(sKey, function(items) {
-      console.log(items, sKey);
       resolve(items[sKey]);
     });
   });
@@ -26,39 +25,26 @@ function chromeStorage(sKey) {
 
 chromeStorage("parseWiki")
   .then(result => {
-    parseWiki = result;
+    if (result) {
+      parseWiki = result;
+    }
     return chromeStorage("customBanWord");
   })
   .then(result => {
-    bannedWord = result;
+    if (result) {
+      bannedWord = result;
+    }
     return chromeStorage("savedCustomSlogans");
   })
   .then(result => {
-    result.forEach(slogan => {
-      slogansKeys.push(slogan);
-      slogans[slogan] = true;
-    });
+    if (result) {
+      result.forEach(slogan => {
+        slogansKeys.push(slogan);
+        slogans[slogan] = true;
+      });
+    }
     startScan();
   });
-
-// chrome.storage.sync.get("parseWiki", function(items) {
-//   parseWiki = items.parseWiki;
-// });
-
-// chrome.storage.sync.get("customBanWord", function(items) {
-//   bannedWord = items.customBanWord;
-// });
-
-// chrome.storage.sync.get("savedCustomSlogans", function(items) {
-//   items.savedCustomSlogans.forEach(slogan => {
-//     slogansKeys.push(slogan);
-//     slogans[slogan] = true;
-//   });
-// });
-
-// const url = "https://en.wikipedia.org/wiki/List_of_political_slogans";
-
-//en.wikipedia.org/w/api.php?action=parse&format=json&origin=*&page=Most%20common%20words%20in%20Spanish'
 
 function startScan() {
   function parseWikiNodes(startNode) {

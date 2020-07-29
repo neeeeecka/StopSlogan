@@ -6,8 +6,10 @@
 let customSlogans = [];
 
 chrome.storage.sync.get("savedCustomSlogans", function(items) {
-  customSlogans = items.savedCustomSlogans;
-  updateUserBannedList("");
+  if (items.savedCustomSlogans) {
+    customSlogans = items.savedCustomSlogans;
+    updateUserBannedList("");
+  }
 });
 
 const userBannedSlogansList = document.getElementById("userBannedSlogansList");
@@ -31,10 +33,14 @@ parseWiki.onchange = () => {
 };
 
 chrome.storage.sync.get("customBanWord", function(items) {
-  customBanWord.placeholder = "Current: " + items.customBanWord;
+  if (items.customBanWord) {
+    customBanWord.placeholder = "Current: " + items.customBanWord;
+  }
 });
 chrome.storage.sync.get("parseWiki", function(items) {
-  parseWiki.checked = items.parseWiki;
+  if (items.parseWiki != undefined) {
+    parseWiki.checked = items.parseWiki;
+  }
 });
 
 set.onclick = () => {
