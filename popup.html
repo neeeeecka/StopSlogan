@@ -28,11 +28,11 @@
       display: inline-block;
       padding: 0 15px;
     }
-    #bannedSlogansList {
+    .list {
       overflow: auto;
       max-height: 200px;
     }
-    #bannedSlogansList > span {
+    .list > span {
       display: flex;
       width: 100%;
       overflow: hidden;
@@ -40,16 +40,20 @@
       padding: 5px 0;
       cursor: pointer;
     }
-    #bannedSlogansList > span > span {
+    .list > span > span {
       display: inline-block;
     }
-    #bannedSlogansList > span:nth-child(2n) {
+    .list > span:nth-child(2n) {
       background: rgb(34, 34, 34);
     }
-    #bannedSlogansList > span > span:first-child {
+    .list > span > span:first-child {
       flex-shrink: 0;
       width: 50px;
       text-align: center;
+      margin-right: 10px;
+    }
+    .list > span > button {
+      margin: auto;
       margin-right: 10px;
     }
     .pageBtn {
@@ -75,16 +79,16 @@
           &gt; Go to word banning settings
         </button>
         <span class="h">Banned slogans found on this webpage: </span>
-        <div id="bannedSlogansList"></div>
+        <div id="bannedSlogansList" class="list"></div>
       </div>
       <div id="page2" class="page">
         <button id="s_page1" class="pageBtn">&lt; Go back</button>
         <span class="h">Add your own banned slogans: </span>
         <span>
-          <input type="text" placeholder="Type..." />
+          <input type="text" id="customSlogan" placeholder="Type..." />
           <button id="add">+</button>
         </span>
-        <div id="userBannedSlogansList"></div>
+        <div id="userBannedSlogansList" class="list"></div>
       </div>
     </div>
   </body>

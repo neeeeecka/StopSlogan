@@ -2,12 +2,48 @@
 //   console.log(request);
 //   sendResponse({ farewell: "goodbye" });
 // });
+let customSlogans = [];
+
+chrome.storage.sync.get("savedCustomSlogans", function(items) {
+  customSlogans = items.savedCustomSlogans;
+  updateUserBannedList("");
+});
+
+const userBannedSlogansList = document.getElementById("userBannedSlogansList");
 
 const bannedSlogansList = document.getElementById("bannedSlogansList");
 const page1 = document.getElementById("page1");
 const page2btn = document.getElementById("s_page2");
 const page1btn = document.getElementById("s_page1");
 const container = document.getElementById("container");
+
+const customSloganTextbox = document.getElementById("customSlogan");
+const addSlogan = document.getElementById("add");
+
+customSloganTextbox.onkeyup = () => {
+  updateUserBannedList(customSloganTextbox.value);
+};
+
+addSlogan.onclick = () => {
+  const customSlogan = customSloganTextbox.value;
+  if (!customSlogans.includes(customSlogan)) {
+    customSlogans.push(customSlogan);
+
+    chrome.storage.sync.set({ savedCustomSlogans: customSlogans }, function() {
+      updateUserBannedList(customSloganTextbox.value);
+    });
+  }
+};
+
+function updateUserBannedList(filter) {
+  userBannedSlogansList.innerHTML = "";
+  customSlogans.forEach((slogan, i) => {
+    if (slogan.includes(filter)) {
+      let sloganDOM = span(span(i + 1) + span(slogan) + button(i, "-"));
+      userBannedSlogansList.innerHTML += sloganDOM;
+    }
+  });
+}
 
 page2btn.onclick = () => {
   page1.style.marginLeft = "-400px";
@@ -18,6 +54,9 @@ page1btn.onclick = () => {
 
 function span(text) {
   return "<span>" + text + "</span>";
+}
+function button(id, text) {
+  return "<button id = " + id + ">" + text + "</button>";
 }
 
 //get banned slogans
