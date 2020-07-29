@@ -17,13 +17,9 @@ const url =
 
 function chromeStorage(sKey) {
   return new Promise(function(resolve, reject) {
-    chrome.storage.local.get(sKey, function(items) {
-      if (chrome.runtime.lastError) {
-        console.error(chrome.runtime.lastError.message);
-        reject(chrome.runtime.lastError.message);
-      } else {
-        resolve(items[sKey]);
-      }
+    chrome.storage.sync.get(sKey, function(items) {
+      console.log(items, sKey);
+      resolve(items[sKey]);
     });
   });
 }
@@ -31,17 +27,18 @@ function chromeStorage(sKey) {
 chromeStorage("parseWiki")
   .then(result => {
     parseWiki = result;
-    return "customBanWord";
+    return chromeStorage("customBanWord");
   })
   .then(result => {
     bannedWord = result;
-    return "savedCustomSlogans";
+    return chromeStorage("savedCustomSlogans");
   })
   .then(result => {
     result.forEach(slogan => {
       slogansKeys.push(slogan);
       slogans[slogan] = true;
     });
+    startScan();
   });
 
 // chrome.storage.sync.get("parseWiki", function(items) {
@@ -52,13 +49,12 @@ chromeStorage("parseWiki")
 //   bannedWord = items.customBanWord;
 // });
 
-chrome.storage.sync.get("savedCustomSlogans", function(items) {
-  console.log(items);
-  items.savedCustomSlogans.forEach(slogan => {
-    slogansKeys.push(slogan);
-    slogans[slogan] = true;
-  });
-});
+// chrome.storage.sync.get("savedCustomSlogans", function(items) {
+//   items.savedCustomSlogans.forEach(slogan => {
+//     slogansKeys.push(slogan);
+//     slogans[slogan] = true;
+//   });
+// });
 
 // const url = "https://en.wikipedia.org/wiki/List_of_political_slogans";
 
