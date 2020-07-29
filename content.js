@@ -6,6 +6,13 @@ const slogans = {};
 let slogansKeys = [];
 const bannedSlogans = [];
 
+chrome.storage.sync.get("savedCustomSlogans", function(items) {
+  items.savedCustomSlogans.forEach(slogan => {
+    slogansKeys.push(slogan);
+    slogans[slogan] = true;
+  });
+});
+
 // const url = "https://en.wikipedia.org/wiki/List_of_political_slogans";
 const url =
   "https://en.wikipedia.org/w/api.php?" +

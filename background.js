@@ -26,22 +26,34 @@ customSloganTextbox.onkeyup = () => {
 };
 
 addSlogan.onclick = () => {
-  const customSlogan = customSloganTextbox.value;
+  const customSlogan = customSloganTextbox.value.toLowerCase();
   if (!customSlogans.includes(customSlogan)) {
     customSlogans.push(customSlogan);
 
     chrome.storage.sync.set({ savedCustomSlogans: customSlogans }, function() {
-      updateUserBannedList(customSloganTextbox.value);
+      customSloganTextbox.value = "";
+      updateUserBannedList("");
     });
   }
 };
 
 function updateUserBannedList(filter) {
+  filter = filter.toLowerCase();
+
+  if (customSlogans.length == 0) {
+    userBannedSlogansList.innerHTML = fullDiv(
+      "Type in word in the textbox and press '+' to add a new word"
+    );
+    return;
+  }
+
   userBannedSlogansList.innerHTML = "";
   customSlogans.forEach((slogan, i) => {
     if (slogan.includes(filter)) {
       let sloganDOM = span(
-        span(i + 1) + span(slogan) + button("removeSlogan-" + i, "-")
+        span(i + 1) +
+          span(slogan) +
+          button("removeSlogan-" + i, "<i class='minus' />")
       );
       userBannedSlogansList.innerHTML += sloganDOM;
     }
@@ -70,6 +82,9 @@ page1btn.onclick = () => {
   page1.style.marginLeft = "0px";
 };
 
+function fullDiv(text) {
+  return "<div class='fullDiv'>" + span(text) + "</div>";
+}
 function span(text) {
   return "<span>" + text + "</span>";
 }
@@ -85,10 +100,10 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     let resultContent = "";
 
     if (response.length == 0) {
-      resultContent = span("Hooray, no banned words!");
+      resultContent = fullDiv("Hooray, no banned words!");
     } else {
       response.forEach((slogan, i) => {
-        resultContent += span(span(i) + span(slogan));
+        resultContent += span(span(i + 1) + span(slogan));
       });
     }
 
