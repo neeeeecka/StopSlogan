@@ -21,11 +21,33 @@ const container = document.getElementById("container");
 const customSloganTextbox = document.getElementById("customSlogan");
 const addSlogan = document.getElementById("add");
 
-customSloganTextbox.onkeyup = () => {
-  updateUserBannedList(customSloganTextbox.value);
+const customBanWord = document.getElementById("customBanWord");
+const set = document.getElementById("set");
+
+chrome.storage.sync.get("customBanWord", function(items) {
+  customBanWord.placeholder = "Current: " + items.customBanWord;
+});
+
+set.onclick = () => {
+  chrome.storage.sync.set({ customBanWord: customBanWord.value }, function() {
+    customBanWord.placeholder = "Current: " + customBanWord.value;
+    customBanWord.value = "";
+  });
+};
+
+customSloganTextbox.onkeyup = e => {
+  if (e.keyCode == 13) {
+    addNew();
+  } else {
+    updateUserBannedList(customSloganTextbox.value);
+  }
 };
 
 addSlogan.onclick = () => {
+  addNew();
+};
+
+function addNew() {
   const customSlogan = customSloganTextbox.value.toLowerCase();
   if (!customSlogans.includes(customSlogan)) {
     customSlogans.push(customSlogan);
@@ -35,7 +57,7 @@ addSlogan.onclick = () => {
       updateUserBannedList("");
     });
   }
-};
+}
 
 function updateUserBannedList(filter) {
   filter = filter.toLowerCase();

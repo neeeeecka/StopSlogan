@@ -35,21 +35,21 @@
     .h {
       color: whitesmoke;
       font-size: 0.8em;
-      margin-bottom: 10px;
-      display: inline-block;
-      padding: 0 15px;
+      display: block;
+      padding: 10px 15px;
+      background: rgb(0, 0, 0);
     }
     #page1 > .list {
       height: calc(100% - 80px);
     }
     #page2 > .list {
-      height: calc(100% - 120px);
+      height: calc(100% - 220px);
     }
     .list {
       overflow: auto;
       max-height: 200px;
       font-size: 0.75em;
-      min-height: 20px;
+      min-height: 50px;
       margin-bottom: 10px;
     }
     .list > span {
@@ -64,7 +64,7 @@
       display: inline-block;
     }
     .list > span:nth-child(2n) {
-      background: rgb(34, 34, 34);
+      background: rgb(46, 46, 49);
     }
     .list > span > span:first-child {
       flex-shrink: 0;
@@ -117,6 +117,7 @@
       display: flex;
       margin-left: 15px;
       margin-bottom: 10px;
+      margin-top: 10px;
     }
     .textbox input {
       background: rgb(241, 241, 241);
@@ -133,6 +134,18 @@
       outline: none;
       font-size: 20px;
     }
+    #customBanWord {
+      width: 180px;
+    }
+    #set {
+      font-size: 0.9em;
+      background: rgb(250, 225, 83);
+      color: rgb(51, 51, 51);
+    }
+    #set:hover {
+      color: black;
+      background: rgb(180, 159, 38);
+    }
   </style>
   <body>
     <div class="container" id="container">
@@ -145,6 +158,16 @@
       </div>
       <div id="page2" class="page">
         <button id="s_page1" class="pageBtn">Go back</button>
+        <span class="h">Replacement word: </span>
+        <span class="textbox">
+          <input
+            type="text"
+            id="customBanWord"
+            placeholder="*Banned by StopSlogan*"
+          />
+          <button id="set">Set</button>
+        </span>
+
         <span class="h">Add your own banned slogans: </span>
         <span class="textbox">
           <input type="text" id="customSlogan" placeholder="Type to search" />
