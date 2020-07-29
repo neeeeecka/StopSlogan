@@ -1,12 +1,20 @@
 const body = document.body;
 
 let bannedWord = "*Banned by StopSlogan*";
+let parseWiki = true;
 
-chrome.storage.sync.get("customBanWord", function(items) {
-  bannedWord = items.customBanWord;
-  console.log(items, bannedWord);
-  startScan();
+chrome.storage.sync.get("parseWiki", function(items) {
+  console.log(items);
+  parseWiki = items.parseWiki;
+  next();
 });
+
+function next() {
+  chrome.storage.sync.get("customBanWord", function(items) {
+    bannedWord = items.customBanWord;
+    startScan();
+  });
+}
 
 function startScan() {
   const slogans = {};

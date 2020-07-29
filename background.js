@@ -24,6 +24,12 @@ const addSlogan = document.getElementById("add");
 const customBanWord = document.getElementById("customBanWord");
 const set = document.getElementById("set");
 
+const parseWiki = document.getElementById("parseWiki");
+
+parseWiki.onchange = () => {
+  chrome.storage.sync.set({ parseWiki: parseWiki.checked }, function() {});
+};
+
 chrome.storage.sync.get("customBanWord", function(items) {
   customBanWord.placeholder = "Current: " + items.customBanWord;
 });
