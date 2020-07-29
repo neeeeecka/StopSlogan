@@ -29,10 +29,13 @@ chrome.storage.sync.get("customBanWord", function(items) {
 });
 
 set.onclick = () => {
-  chrome.storage.sync.set({ customBanWord: customBanWord.value }, function() {
-    customBanWord.placeholder = "Current: " + customBanWord.value;
-    customBanWord.value = "";
-  });
+  saveNewBanWord();
+};
+
+customBanWord.onkeyup = e => {
+  if (e.keyCode == 13) {
+    saveNewBanWord();
+  }
 };
 
 customSloganTextbox.onkeyup = e => {
@@ -46,6 +49,13 @@ customSloganTextbox.onkeyup = e => {
 addSlogan.onclick = () => {
   addNew();
 };
+
+function saveNewBanWord() {
+  chrome.storage.sync.set({ customBanWord: customBanWord.value }, function() {
+    customBanWord.placeholder = "Current: " + customBanWord.value;
+    customBanWord.value = "";
+  });
+}
 
 function addNew() {
   const customSlogan = customSloganTextbox.value.toLowerCase();
