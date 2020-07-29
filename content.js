@@ -25,7 +25,7 @@ function chromeStorage(sKey) {
 
 chromeStorage("parseWiki")
   .then(result => {
-    if (result) {
+    if (result != undefined) {
       parseWiki = result;
     }
     return chromeStorage("customBanWord");
