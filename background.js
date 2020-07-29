@@ -33,6 +33,9 @@ parseWiki.onchange = () => {
 chrome.storage.sync.get("customBanWord", function(items) {
   customBanWord.placeholder = "Current: " + items.customBanWord;
 });
+chrome.storage.sync.get("parseWiki", function(items) {
+  parseWiki.checked = items.parseWiki;
+});
 
 set.onclick = () => {
   saveNewBanWord();
