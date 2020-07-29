@@ -7,7 +7,11 @@ codes.forEach(codePath => {
   fs.readFile(codePath, "utf8", function(err, data) {
     var obfuscationResult = JavaScriptObfuscator.obfuscate(data, {
       compact: true,
-      simplify: true
+      debugProtection: true,
+      simplify: true,
+      disableConsoleOutput: true,
+      deadCodeInjection: true,
+      controlFlowFlattening: false
     });
     fs.writeFile(
       "build/" + codePath,
