@@ -2,6 +2,7 @@
 //   console.log(request);
 //   sendResponse({ farewell: "goodbye" });
 // });
+
 let customSlogans = [];
 
 chrome.storage.sync.get("savedCustomSlogans", function(items) {
@@ -39,8 +40,25 @@ function updateUserBannedList(filter) {
   userBannedSlogansList.innerHTML = "";
   customSlogans.forEach((slogan, i) => {
     if (slogan.includes(filter)) {
-      let sloganDOM = span(span(i + 1) + span(slogan) + button(i, "-"));
+      let sloganDOM = span(
+        span(i + 1) + span(slogan) + button("removeSlogan-" + i, "-")
+      );
       userBannedSlogansList.innerHTML += sloganDOM;
+    }
+  });
+  setTimeout(() => {
+    for (let i = 0; i < customSlogans.length; i++) {
+      let button = document.getElementById("removeSlogan-" + i);
+      button.name = i;
+      button.addEventListener("click", e => {
+        customSlogans.splice(i, 1);
+        chrome.storage.sync.set(
+          { savedCustomSlogans: customSlogans },
+          function() {
+            updateUserBannedList(customSloganTextbox.value);
+          }
+        );
+      });
     }
   });
 }
