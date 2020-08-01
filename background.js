@@ -5,13 +5,6 @@
 
 let customSlogans = [];
 
-chrome.storage.sync.get("savedCustomSlogans", function(items) {
-  if (items.savedCustomSlogans) {
-    customSlogans = items.savedCustomSlogans;
-    updateUserBannedList("");
-  }
-});
-
 const userBannedSlogansList = document.getElementById("userBannedSlogansList");
 
 const bannedSlogansList = document.getElementById("bannedSlogansList");
@@ -27,6 +20,19 @@ const customBanWord = document.getElementById("customBanWord");
 const set = document.getElementById("set");
 
 const parseWiki = document.getElementById("parseWiki");
+
+function sleep(seconds) {
+  var e = new Date().getTime() + seconds * 1000;
+  while (new Date().getTime() <= e) {}
+}
+
+chrome.storage.sync.get("savedCustomSlogans", function(items) {
+  if (items.savedCustomSlogans) {
+    customSlogans = items.savedCustomSlogans;
+
+    // updateUserBannedList("");
+  }
+});
 
 parseWiki.onchange = () => {
   chrome.storage.sync.set({ parseWiki: parseWiki.checked }, function() {});
@@ -139,6 +145,15 @@ function button(id, text) {
   return "<button id = " + id + ">" + text + "</button>";
 }
 
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 //get banned slogans
 chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
   chrome.tabs.sendMessage(tabs[0].id, { action: "getBannedSlogans" }, function(
@@ -151,7 +166,7 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         resultContent = fullDiv("Hooray, no banned words!");
       } else {
         response.forEach((slogan, i) => {
-          resultContent += span(span(i + 1) + span(slogan));
+          resultContent += span(span(i + 1) + span(escapeHtml(slogan)));
         });
       }
 
