@@ -77,15 +77,16 @@ function startScan() {
         let doc = domParser.parseFromString(text["*"], "text/html");
         parseWikiNodes(doc);
         checkNodeRecursively(body);
-        const observer = new MutationObserver(callback);
-        observer.observe(body, {
-          childList: true,
-          subtree: true
-        });
       });
   } else {
     checkNodeRecursively(body);
   }
+  const observer = new MutationObserver(callback);
+  observer.observe(body, {
+    childList: true,
+    subtree: true
+  });
+
   function checkNode(startNode) {
     if (startNode.nodeType == Node.TEXT_NODE) {
       const value = startNode.nodeValue.toLowerCase();

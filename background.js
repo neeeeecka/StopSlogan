@@ -144,16 +144,18 @@ chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
   chrome.tabs.sendMessage(tabs[0].id, { action: "getBannedSlogans" }, function(
     response
   ) {
-    let resultContent = "";
+    if (response) {
+      let resultContent = "";
 
-    if (response.length == 0) {
-      resultContent = fullDiv("Hooray, no banned words!");
-    } else {
-      response.forEach((slogan, i) => {
-        resultContent += span(span(i + 1) + span(slogan));
-      });
+      if (response.length == 0) {
+        resultContent = fullDiv("Hooray, no banned words!");
+      } else {
+        response.forEach((slogan, i) => {
+          resultContent += span(span(i + 1) + span(slogan));
+        });
+      }
+
+      bannedSlogansList.innerHTML = resultContent;
     }
-
-    bannedSlogansList.innerHTML = resultContent;
   });
 });
