@@ -15,6 +15,15 @@ const url =
     format: "json"
   });
 
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function chromeStorage(sKey) {
   return new Promise(function(resolve, reject) {
     chrome.storage.sync.get(sKey, function(items) {
@@ -92,7 +101,7 @@ function startScan() {
       const value = startNode.nodeValue.toLowerCase();
       if (deepCheck(value)) {
         startNode.nodeValue = bannedWord;
-        bannedSlogans.push(value);
+        bannedSlogans.push(escapeHtml(value));
       }
     } else {
       if (startNode.nodeType == Node.ELEMENT_NODE) {
