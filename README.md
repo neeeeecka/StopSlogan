@@ -1,3 +1,3 @@
 # StopSlogan
 
-Chromium extension to help prevent political propaganda and other words on the websites.
+Chromium extension to help prevent different political propaganda slogans on the internet.
